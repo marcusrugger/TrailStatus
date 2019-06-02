@@ -19,8 +19,8 @@ namespace TrailStatus.Controllers
 
             if (_context.Trail.Count() == 0)
             {
-                // Create a new TodoItem if collection is empty,
-                // which means you can't delete all TodoItems.
+                // Create a new Trail if collection is empty,
+                // which means you can't delete all Trails.
                 _context.Trail.Add(new Trail { Name = "Magic Mystery Trail" });
                 _context.SaveChanges();
             }
