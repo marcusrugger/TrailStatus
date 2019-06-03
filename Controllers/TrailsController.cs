@@ -17,11 +17,16 @@ namespace TrailStatus.Controllers
         {
             _context = context;
 
-            if (_context.Trail.Count() == 0)
+            if (_context.Trails.Count() == 0)
             {
                 // Create a new Trail if collection is empty,
                 // which means you can't delete all Trails.
-                _context.Trail.Add(new Trail { Name = "Magic Mystery Trail" });
+                _context.Trails.Add(new Trail
+                {
+                    Name = "Magic Mystery Trail",
+                    Status = Trail.TrailStatus.Green
+                });
+
                 _context.SaveChanges();
             }
         }
@@ -30,14 +35,14 @@ namespace TrailStatus.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Trail>>> GetTrails()
         {
-            return await _context.Trail.ToListAsync();
+            return await _context.Trails.ToListAsync();
         }
 
         // GET: api/Trails/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Trail>> GetTrail(long id)
         {
-            var trail = await _context.Trail.FindAsync(id);
+            var trail = await _context.Trails.FindAsync(id);
 
             if (trail == null)
             {
@@ -51,7 +56,7 @@ namespace TrailStatus.Controllers
         [HttpPost]
         public async Task<ActionResult<Trail>> PostTrail(Trail trail)
         {
-            _context.Trail.Add(trail);
+            _context.Trails.Add(trail);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetTrail), new { id = trail.Id }, trail);
@@ -76,14 +81,14 @@ namespace TrailStatus.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTrail(long id)
         {
-            var trail = await _context.Trail.FindAsync(id);
+            var trail = await _context.Trails.FindAsync(id);
 
             if (trail == null)
             {
                 return NotFound();
             }
 
-            _context.Trail.Remove(trail);
+            _context.Trails.Remove(trail);
             await _context.SaveChangesAsync();
 
             return NoContent();

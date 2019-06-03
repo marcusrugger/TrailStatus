@@ -27,7 +27,15 @@ namespace TrailStatus
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<TrailsContext>(opt => opt.UseInMemoryDatabase("TrailsList"));
+            // services.AddDbContext<TrailsContext>(opt => opt.UseInMemoryDatabase("TrailsList"));
+            services.AddDbContext<TrailsContext>();
+
+            {
+                var obj = services.BuildServiceProvider();
+                var context = obj.GetService<TrailsContext>();
+                context.Database.Migrate();
+            }
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

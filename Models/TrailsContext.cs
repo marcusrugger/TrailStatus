@@ -9,6 +9,11 @@ namespace TrailStatus.Models
         {
         }
 
-        public DbSet<Trail> Trail { get; set; }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlite("Data Source=TrailStatus.db");
+        }
+
+        public DbSet<Trail> Trails { get; set; }
     }
 }
