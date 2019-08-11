@@ -33,7 +33,7 @@ namespace TrailStatus
             {
                 var obj = services.BuildServiceProvider();
                 var context = obj.GetService<TrailsContext>();
-                context.Database.Migrate();
+                context.Database.EnsureCreated();
             }
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
